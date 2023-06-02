@@ -1,6 +1,6 @@
 # Medical-Gym
 
-Download the data from https://cloud.beuth-hochschule.de/index.php/f/31197369
+Download the data from XXXXXXXXXXXXXXXX
 
 
 Can be installed via 

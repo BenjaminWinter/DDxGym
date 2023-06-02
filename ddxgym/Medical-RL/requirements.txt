@@ -1,0 +1,9 @@
+gym==0.21.0
+transformers
+torch
+numpy
+ray==2.0.0
+ray[rllib]
+ray[tune]
+tabulate
+tqdm

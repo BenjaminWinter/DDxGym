@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block callout %}
+    Generating Patients with one of {{ session.num_diseases }} diseases
+{% endblock callout %}
+
+{% block content %}
+<div class="grid-x grid-margin-x">
+    <div class="small-6 cell grid-margin-x">
+        <div class="card ">
+            <div class="card-divider">
+                <h3>Observation</h3>
+            </div>
+            <div class="card-section"> 
+                
+                <p>{{ session.last_obs | safe}}</p>
+            </div>
+            <div class="card-section action-section">
+                {% if session.last_r is not none %}
+                    <p>The Reward for your last action was {{ session.last_r }}</p>
+                {% endif %}
+                {% if session.last_done %}
+                    {% if  session.last_r < 200 %}
+                        <p>Unfortunately your Patient has died.</p>
+                    {% else %}
+                        <p>Congratulations! Your Patient was cured.</p>
+                    {% endif %}
+                    <a href="/demo/new" class="button">New Patient</a>
+                {% endif %}
+                
+                <div class="small-grid-x grid-margin-x">
+                    <form action="/demo/step" method="POST">
+                        <div class="input-group">
+                            <span class="input-group-label">Action</span>
+                            <input id="actioninput" name="action" class="input-group-field">
+                            <div class="input-group-button">
+                                <input type="submit" class="button" value="Submit">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="small-6 cell grid-margin-x">
+        <div class="card">
+            <div class="card-divider">
+                <h3> Additional info </h3>
+            </div>
+            <div class="card-section">
+                
+                <div class="input-group">
+                    <input id="info1" class="button infobutton input-group-button" type="button" value="Show Full Disease Info">
+                    <input id="info2" class="button infobutton input-group-button" type="button" value="Show Detailed Procedure Info">
+                </div>
+
+            </div>
+            <div class="card-section">
+                <div id="content_info1" style="display:none" class="grid-margin-x cell card-section">
+                    <p>{{ session.disease_info | safe }}</p>
+                </div>
+            </div>
+            <div class="card-section">
+                <div id="content_info2" style="display:none" class="grid-margin-x cell card-section">
+                    <table>
+                        <tr>
+                            <th>Symptom</th>
+                            <th>Examinations</th>
+                            <th>Treatments</th>
+                            <th>Main Symptom</th>
+                        </tr>
+                        {% for item in session.procedure_info %}
+                            <tr>
+                                <th>{{ item.symptom }}</th>
+                                <th>{{ item.examinations }}</th>
+                                <th>{{ item.treatments }}</th>
+                                <th>{{ item.is_main }}</th>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+{% block extra_scripts %}
+    <script type="text/javascript">
+        $('.infobutton').each(function(){
+            $(this).click(function(){
+                $('#content_'+$(this).attr('id')).toggle();
+            });
+        });
+        let actions = JSON.parse({{ session.actions | tojson }})
+        $("#actioninput").autocomplete({
+            "source": actions,
+            //"autofocus": true,
+            //"ui-autocomplete": "action-dropdown",
+            //"delay": 10,
+            //"minLength": 0
+        })
+
+    </script>
+{% endblock extra_scripts %}

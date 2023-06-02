@@ -1,0 +1,29 @@
+.input-group {
+    min-height: 40px;
+}
+
+
+ul.ui-autocomplete {
+    list-style: none;
+    width: fit-content;
+}
+
+li.ui-menu-item {
+    padding: .5rem .625rem .625rem;
+}
+ul.ui-autocomplete li:nth-child(even) {
+    background-color: #f1f1f1;
+}
+
+.ui-helper-hidden-accessible div:last-child{
+    display:none;
+}
+.action-section {
+    padding-bottom: 0px;
+}
+.action-section .input-group {
+    margin-bottom: 0px;
+}
+.input-group {
+    justify-content: center;
+}

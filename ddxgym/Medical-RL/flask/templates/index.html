@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Medical RL Demo{% endblock %}
+{% block callout %}
+    <h1>Start Curing Patients<h1>
+{% endblock callout %}
+{% block content %}
+<div class="small-grid-x grid-margin-x">
+    <form action="/demo" method="post">
+        <div class="grid-x grid-margin-x">
+            <div class="small-5 cell grid-x grid-padding-x large-offset-2">
+                <div class="small-8 cell">
+                    <label class="middle" for="num_diseases">
+                        How many Diseases are there? (max. 256)
+                    </label>
+                </div>
+                <div class="small-3 cell">
+                    <input id="num_diseases" name="num_diseases" type="number" value="256" min="1" max="256">
+                </div>
+            </div>
+            <div class="small-2 cell">
+                <input type="submit" class="button" value="Start Curing Patients">
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock content %}
